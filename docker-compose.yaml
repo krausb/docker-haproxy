@@ -1,0 +1,25 @@
+version: '2'
+
+services:
+    srv-proxy:
+        build: .
+        image: srv/srv-proxy
+        container_name: srv-proxy
+        ports:
+            - "80:80"
+            - "443:443"
+            - "1936:1936"
+        external_links:
+            - srv-www-khive
+            - srv-wiki-khive
+            - srv-adm-khive
+            - srv-webmail-khive
+            - srv-nexus
+        volumes:
+            - /srv/conf/haproxy:/srv/conf
+            - /srv/ssl/k-hive.de:/srv/ssl
+        restart: always
+networks:
+    default:
+        external:
+            name: khive-lan
